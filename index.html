@@ -142,10 +142,10 @@ document.getElementById('sendBtn').addEventListener('click', function() {
     alert('ກະລຸນາເລືອກອາຫານກ່ອນ'); // กรุณาเลือกอาหารก่อน
     return;
   }
-
+ const foodNames = cart.map(item => item.lo || item.name).join(', ');
   const payload = {
     type: activeTab,
-    items: selectedItems,
+    items: foodNames, // 👉 ส่งข้อความชื่ออาหารที่แปลงแล้วแทน
     note: note
   };
 
