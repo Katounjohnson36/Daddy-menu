@@ -130,7 +130,7 @@
 </div>
 
 <script>
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwtYPh8Qv0OQRa8xH-I210acqujL6AMf0J_AuTeW8E4Z6xE1s18LrRawqHXT7J2RhIb/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxIWk-AqraZq3-6kQf0jYW0hiJK4AaFhDLyCm20l0dQNLN1CnEUuv6e29gHqB61Bs-y/exec";
 document.getElementById('sendBtn').addEventListener('click', function() {
   // ดึงรายการอาหารที่อยู่ใน Cart/เลือกไว้
   // สมมติว่ามีตัวแปร cart หรือดึงจาก DOM
@@ -145,7 +145,7 @@ document.getElementById('sendBtn').addEventListener('click', function() {
 
   const payload = {
     type: activeTab,
-    items: cart,
+    items: FOOD_ITEMS,
     note: note
   };
 
