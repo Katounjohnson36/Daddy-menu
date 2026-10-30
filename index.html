@@ -130,7 +130,7 @@
 </div>
 
 <script>
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwaX_5xihfl8rYDookm6235h_a0CoGMfGmsuiwRHo0d-R9s5F7nQTYKsbUBAYl3HVE/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbySi7kXS9mX6wf58anKlcu9bnHb3uRKzUGosfhIXgj5qaHV7pY6Agx1uX_R7JGTi9o9/exec";
 document.getElementById('sendBtn').addEventListener('click', function() {
   // ดึงรายการอาหารที่อยู่ใน Cart/เลือกไว้
   // สมมติว่ามีตัวแปร cart หรือดึงจาก DOM
@@ -142,12 +142,12 @@ document.getElementById('sendBtn').addEventListener('click', function() {
     alert('ກະລຸນາເລືອກອາຫານກ່ອນ'); // กรุณาเลือกอาหารก่อน
     return;
   }
+
   const payload = {
     type: activeTab,
-    items: selectedItems, // 👉 ส่งข้อความชื่ออาหารที่แปลงแล้วแทน
+    items: selectedItems,
     note: note
   };
-
   // ส่งข้อมูลไปยัง Google Apps Script
 fetch(GOOGLE_SCRIPT_URL, {
   method: 'POST',
