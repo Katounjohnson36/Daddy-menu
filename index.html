@@ -142,10 +142,10 @@ document.getElementById('sendBtn').addEventListener('click', function() {
     alert('ກະລຸນາເລືອກອາຫານກ່ອນ'); // กรุณาเลือกอาหารก่อน
     return;
   }
-  const foodNames = cart.map(item => item.lo).join(', ');
+
   const payload = {
     type: activeTab,
-    items: foodNames, // สมมติว่ามีตัวแปร foodNames ที่เก็บชื่ออาหารที่เลือกไว้
+    items: cart,
     note: note
   };
 
