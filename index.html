@@ -131,8 +131,7 @@
 
 <script>
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0FKhghf_GydaZMpmBixtIHAGbD12U3aIQKQZ7_bI183FDsDwF51bs8KvcRSGjF8zU/exec";
-document.getElementById('sendBtn').addEventListener('click', 
-function() {
+document.getElementById('sendBtn').addEventListener('click', function() {
   // ดึงรายการอาหารที่อยู่ใน Cart/เลือกไว้
   // สมมติว่ามีตัวแปร cart หรือดึงจาก DOM
   const selectedItems = cart; // ใส่ตัวแปรที่เก็บรายการอาหารที่เลือกไว้
@@ -143,10 +142,10 @@ function() {
     alert('ກະລຸນາເລືອກອາຫານກ່ອນ'); // กรุณาเลือกอาหารก่อน
     return;
   }
-
+  const foodNames = cart.map(item => item.lo).join(', ');
   const payload = {
     type: activeTab,
-    items: cart,
+    items: foodNames, // สมมติว่ามีตัวแปร foodNames ที่เก็บชื่ออาหารที่เลือกไว้
     note: note
   };
 
