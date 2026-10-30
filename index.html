@@ -130,11 +130,12 @@
 </div>
 
 <script>
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyoEyZk0QTPzwJ6eOMrH1wQ3PcE3InRWnNpQ6rYnCxQcH_CuY2aPnv4oCamKb9jkFj6/exec';
-document.getElementById('sendBtn').addEventListener('click', function() {
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0FKhghf_GydaZMpmBixtIHAGbD12U3aIQKQZ7_bI183FDsDwF51bs8KvcRSGjF8zU/exec";
+document.getElementById('sendBtn').addEventListener('click', 
+function() {
   // ดึงรายการอาหารที่อยู่ใน Cart/เลือกไว้
   // สมมติว่ามีตัวแปร cart หรือดึงจาก DOM
-  const selectedItems = FOOD_ITEMS; // ใส่ตัวแปรที่เก็บรายการอาหารที่เลือกไว้
+  const selectedItems = cart; // ใส่ตัวแปรที่เก็บรายการอาหารที่เลือกไว้
   const note = document.getElementById('noteInput').value;
   const activeTab = document.querySelector('.tab.active').innerText;
 
