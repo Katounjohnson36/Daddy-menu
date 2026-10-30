@@ -142,10 +142,10 @@ document.getElementById('sendBtn').addEventListener('click', function() {
     alert('ກະລຸນາເລືອກອາຫານກ່ອນ'); // กรุณาเลือกอาหารก่อน
     return;
   }
-
+const itemNamesString = selectedItems.map(item => item.name || item.lo).join(', ');
   const payload = {
     type: activeTab,
-    items: selectedItems,
+    items: itemNamesString,
     note: note
   };
   // ส่งข้อมูลไปยัง Google Apps Script
