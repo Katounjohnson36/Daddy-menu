@@ -165,13 +165,10 @@ const SHEET_URL = "https://script.google.com/macros/s/AKfycbxqk-WVVcxL0fE_VD4oWD
 function sendToSheet(payload){
   return fetch(SHEET_URL, {
     method:'POST',
+    mode:'no-cors',
     headers:{'Content-Type':'text/plain;charset=utf-8'},
     body: JSON.stringify(payload)
-  }).then(r=>r.text()).then(t=>{
-    alert('ผลจาก Sheet: '+t.slice(0,150)); return true;
-  }).catch(err=>{
-    alert('ส่งไม่สำเร็จ: '+err); return false;
-  });
+  }).then(()=>true).catch(()=>false);
 }
 let selected = new Map(); // id -> {lo, img?, emoji?}
 
