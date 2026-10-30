@@ -159,16 +159,27 @@ const SPECIAL_ITEMS = [
 const ADD_MENU_ITEM = {key:"addmenu", type:"addmenu", lo:"ເພີ່ມເມນູ", en:"Suggest new item", img:'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0ODAgNDgwIj4KPHJlY3Qgd2lkdGg9IjQ4MCIgaGVpZ2h0PSI0ODAiIHJ4PSIzMCIgZmlsbD0iI2VlZjdlZSIvPgo8Y2lyY2xlIGN4PSIyNDAiIGN5PSIyMDAiIHI9Ijc1IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMzYmE1NWQiIHN0cm9rZS13aWR0aD0iNiIvPgo8bGluZSB4MT0iMjQwIiB5MT0iMTYwIiB4Mj0iMjQwIiB5Mj0iMjQwIiBzdHJva2U9IiMzYmE1NWQiIHN0cm9rZS13aWR0aD0iMTQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8bGluZSB4MT0iMjAwIiB5MT0iMjAwIiB4Mj0iMjgwIiB5Mj0iMjAwIiBzdHJva2U9IiMzYmE1NWQiIHN0cm9rZS13aWR0aD0iMTQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4='};
 
 // ====== ตั้งค่า: ใส่ URL ของ Google Apps Script (Web app) ตรงนี้ ======
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbyRuw91j_ToMYVu1Ee6r4puCExc8zHkQW9FQZNzBjrIvfL-I9VJtcIXQOox6p61qRDD/exec";
-// ===================================================================
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyRuw91j_ToMYVu1Ee6r4puCExc8zHkQW9FQZNzBjrIvfL-I9VJtcIXQOox6p61qRDD/exec";
 
-function sendToSheet(payload){
-  return fetch(SHEET_URL, {
-    method:'POST',
-    mode:'no-cors',
-    headers:{'Content-Type':'text/plain;charset=utf-8'},
-    body: JSON.stringify(payload)
-  }).then(()=>true).catch(()=>false);
+function sendOrder(data) {
+  fetch(WEB_APP_URL, {
+    method: "POST",
+    mode: "no-cors", // สำคัญ: ช่วยเลี่ยงปัญหา CORS เบื้องต้นสำหรับ Apps Script
+    cache: "no-cache",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => {
+    // หากใช้ mode: 'no-cors' จะไม่สามารถอ่าน response.json() โดยตรงได้
+    // แนะนำให้แสดงข้อความว่าส่งสำเร็จ
+    alert("ส่งออร์เดอร์สำเร็จ!");
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("ส่งไม่สำเร็จ: " + error);
+  });
 }
 let selected = new Map(); // id -> {lo, img?, emoji?}
 
