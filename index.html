@@ -134,7 +134,7 @@ const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyoEyZk0QTPzw
 document.getElementById('sendBtn').addEventListener('click', function() {
   // ดึงรายการอาหารที่อยู่ใน Cart/เลือกไว้
   // สมมติว่ามีตัวแปร cart หรือดึงจาก DOM
-  const selectedItems = selectedFoodList; // ใส่ตัวแปรที่เก็บรายการอาหารที่เลือกไว้
+  const selectedItems = FOOD_ITEMS; // ใส่ตัวแปรที่เก็บรายการอาหารที่เลือกไว้
   const note = document.getElementById('noteInput').value;
   const activeTab = document.querySelector('.tab.active').innerText;
 
