@@ -131,15 +131,10 @@
 </div>
 
 <script>
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzNQW8-K0tnfTJ2bgidwbysCGcsgulLgeKsOUyUS7BSPWUlSDXVG38NIqV9-o8-jgOc/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwdCIHjIX425m33kJcgeDW4dP4bYzMIi7D4oWkq8nUDxxyu4EOI1w0jI4EXZoAoPCSV/exec";
 
-  document.getElementById('sendBtn').addEventListener('click', function() {
-  
-  let currentCart = cart;
-  if (!Array.isArray(currentCart)) {
-    currentCart = currentCart ? [currentCart] : [];
-  }
-
+ document.getElementById('sendBtn').addEventListener('click', function() {
+  let currentCart = Array.isArray(cart) ? cart : [];
   const note = document.getElementById('noteInput').value;
   const activeTabElement = document.querySelector('.tab.active');
   const activeTab = activeTabElement ? activeTabElement.innerText : '';
@@ -149,36 +144,36 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzNQW8-K0tnfT
     return;
   }
 
-  // ปรับปรุงวงเล็บและฟังก์ชัน .map() ให้ถูกต้องครบถ้วน
-  const itemNamesString = currentCart.map(item => {
-    if (!item) return '';
-    if (typeof item === 'object') {
-      return item.lo || item.name || item.title || JSON.stringify(item);
+  // แปลงรายการในตะกร้าให้เป็นข้อความชื่อเมนูอย่างชัดเจน
+  let itemNamesArray = [];
+  currentCart.forEach(item => {
+    if (typeof item === 'string') {
+      itemNamesArray.push(item);
+    } else if (item && typeof item === 'object') {
+      // ดึงชื่อภาษาลาวหรือชื่อเมนูออกมา
+      let name = item.lo || item.name || item.title || '';
+      if (name) itemNamesArray.push(name);
     }
-    return String(item);
-  }).filter(Boolean).join(', ');
+  });
+
+  const itemNamesString = itemNamesArray.join(', '); // รวมเป็นข้อความ เช่น "ຊາຮ້ອນ, ນົມສົດ"
 
   const payload = {
     type: activeTab,
-    items: itemNamesString,
+    items: itemNamesString, // ส่งไปเป็น String แน่นอน
     note: note
   };
 
-  // ส่งข้อมูลไปที่ Google Apps Script
   fetch(GOOGLE_SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   })
   .then(() => {
     alert('ส่งออเดอร์สำเร็จ!');
-    cart = []; // ล้างค่าตะกร้า
-    if (typeof updateCartUI === 'function') {
-      updateCartUI(); // อัปเดตหน้าจอ
-    }
+    cart = [];
+    if (typeof updateCartUI === 'function') updateCartUI();
   })
   .catch(error => console.error('Error:', error));
 });
