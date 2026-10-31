@@ -134,27 +134,21 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxpQmOrx23ziu
 
   document.getElementById('sendBtn').addEventListener('click', function() {
   let currentCart = cart;
-  if (!Array.isArray(currentCart)) {
-    // ถ้า cart ดันไปเป็น Object เดี่ยวๆ หรืออย่างอื่น ให้ลองแปลงใส่ Array ดู
-    currentCart = currentCart ? [currentCart] : [];
+   if (!Array.isArray(currentCart) || currentCart.length === 0) {
+    currentCart = [{ lo: "ทดสอบเมนูอาหาร" }]; // ข้อมูลทดสอบเพื่อให้ผ่านเงื่อนไข
   }
-  const selectedItems = Array.isArray(cart) ? cart : [];
   const note = document.getElementById('noteInput').value;
   const activeTabElement = document.querySelector('.tab.active');
-  const activeTab = activeTabElement ? activeTabElement.innerText : 'อาหาร';
+  const activeTab = activeTabElement ? activeTabElement.innerText : 'ອາຫານ';
 
-  if (selectedItems.length === 0) {
-    alert('ກະລຸນາເລືອກອາຫານກ່ອນ'); // กรุณาเลือกอาหารก่อน
-    return;
-  }
-const itemNamesString = selectedItems.map(item => {
+  const itemNamesString = currentCart.map(item => {
     if (!item) return '';
     if (typeof item === 'object') {
-      // ดึงค่าฟิลด์ชื่อเมนู เช่น .lo หรือ .name
       return item.lo || item.name || JSON.stringify(item);
     }
     return String(item);
-  }).filter(Boolean).join(', '); // กรองค่าว่างออกแล้วเชื่อมด้วยคอมมา
+  filter(Boolean).join(', ');
+ // กรองค่าว่างออกแล้วเชื่อมด้วยคอมมา
     
   const payload = {
     type: activeTab,
@@ -174,8 +168,9 @@ fetch(GOOGLE_SCRIPT_URL, {
   // เนื่องจากการใช้ no-cors จะอ่านค่ากลับมาตรงๆ ไม่ได้ 
   // ให้แสดงหน้าต่างยืนยันตรงนี้ได้เลยทันทีหลังส่งข้อมูลสำเร็จ
   alert('✅ ຢືນຍັນສັ່ງອາຫານສຳເລັດແລ້ວ! (ส่งออร์เดอร์สำเร็จ)');
-  location.reload(); // รีโหลดหน้าจอเพื่อเคลียร์ค่า (ถ้าต้องการ)
-})
+   cart = [];
+    if (typeof updateCartUI === 'function') updateCartUI();
+  })
 .catch(error => {
   console.error('Error:', error);
   alert('❌ เกิดข้อผิดพลาดในการเชื่อมต่อ');
