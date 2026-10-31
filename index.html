@@ -133,6 +133,11 @@
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxpQmOrx23ziu2Eij0l_XMdMwQqJdOUZ6D9hP-uh15_XeouYgjOErk-DCCvvxdtuoHW/exec";
 
   document.getElementById('sendBtn').addEventListener('click', function() {
+  let currentCart = cart;
+  if (!Array.isArray(currentCart)) {
+    // ถ้า cart ดันไปเป็น Object เดี่ยวๆ หรืออย่างอื่น ให้ลองแปลงใส่ Array ดู
+    currentCart = currentCart ? [currentCart] : [];
+  }
   const selectedItems = Array.isArray(cart) ? cart : [];
   const note = document.getElementById('noteInput').value;
   const activeTabElement = document.querySelector('.tab.active');
