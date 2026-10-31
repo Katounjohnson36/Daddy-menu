@@ -131,20 +131,26 @@
 
 <script>
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxpQmOrx23ziu2Eij0l_XMdMwQqJdOUZ6D9hP-uh15_XeouYgjOErk-DCCvvxdtuoHW/exec";
-document.getElementById('sendBtn').addEventListener('click', function() {
-  // ดึงรายการอาหารที่อยู่ใน Cart/เลือกไว้
-  // สมมติว่ามีตัวแปร cart หรือดึงจาก DOM
-  const selectedItems = cart; // ใส่ตัวแปรที่เก็บรายการอาหารที่เลือกไว้
+
+  document.getElementById('sendBtn').addEventListener('click', function() {
+  const selectedItems = Array.isArray(cart) ? cart : [];
   const note = document.getElementById('noteInput').value;
-  const activeTab = document.querySelector('.tab.active').innerText;
+  const activeTabElement = document.querySelector('.tab.active');
+  const activeTab = activeTabElement ? activeTabElement.innerText : 'อาหาร';
 
   if (selectedItems.length === 0) {
     alert('ກະລຸນາເລືອກອາຫານກ່ອນ'); // กรุณาเลือกอาหารก่อน
     return;
   }
 const itemNamesString = selectedItems.map(item => {
-  return typeof item === 'object' ? (item.lo || item.name || JSON.stringify(item)) : item;
-  }).join(', ');
+    if (!item) return '';
+    if (typeof item === 'object') {
+      // ดึงค่าฟิลด์ชื่อเมนู เช่น .lo หรือ .name
+      return item.lo || item.name || JSON.stringify(item);
+    }
+    return String(item);
+  }).filter(Boolean).join(', '); // กรองค่าว่างออกแล้วเชื่อมด้วยคอมมา
+    
   const payload = {
     type: activeTab,
     items: itemNamesString,
