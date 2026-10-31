@@ -142,7 +142,9 @@ document.getElementById('sendBtn').addEventListener('click', function() {
     alert('ກະລຸນາເລືອກອາຫານກ່ອນ'); // กรุณาเลือกอาหารก่อน
     return;
   }
-const itemNamesString = selectedItems.map(item => item.name || item.lo).join(', ');
+const itemNamesString = selectedItems.map(item => {
+  return typeof item === 'object' ? (item.lo || item.name || JSON.stringify(item)) : item;
+  }).join(', ');
   const payload = {
     type: activeTab,
     items: itemNamesString,
